@@ -4,7 +4,7 @@ import { Address } from './address.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column()
   f_name: string;
@@ -18,6 +18,6 @@ export class User {
   @Column()
   tel_number: string;
 
-  @OneToMany(() => Address, (address) => address.user_id, { cascade: true })
-  addressList: Address[];
+  @OneToMany((type) => Address, (address) => address.user, { cascade: true })
+  address: Address[];
 }
