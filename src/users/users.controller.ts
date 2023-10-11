@@ -20,9 +20,9 @@ import { ClientProxy, EventPattern } from '@nestjs/microservices';
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
-    @Inject("USER_SERVICE")
-    private userMicroSvc: ClientProxy
-  ) { }
+    @Inject('USER_SERVICE')
+    private userMicroSvc: ClientProxy,
+  ) {}
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
@@ -68,14 +68,13 @@ export class UsersController {
 
   @EventPattern('get-users')
   async sendUsers() {
-    console.log('calling microSVC : get-users')
-    return await this.usersService.findAll()
+    console.log('calling microSVC : get-users');
+    return await this.usersService.findAll();
   }
 
   @EventPattern('get-user')
   async sendUser(data: number) {
-    console.log('calling microSVC : get-user')
-    return this.usersService.findOne(+data)
+    console.log('calling microSVC : get-user');
+    return this.usersService.findOne(+data);
   }
-
 }

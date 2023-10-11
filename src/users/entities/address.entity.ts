@@ -21,7 +21,7 @@ export class Address {
   @Column()
   zip_code: number;
 
-  @ManyToOne((type) => User, (user) => user.address, { onDelete: 'SET NULL' })
+  @ManyToOne(() => User, (user) => user.address, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'user_id' })
   user_id: User;
 }

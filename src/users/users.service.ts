@@ -14,11 +14,11 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(Address)
     private readonly addressRepository: Repository<Address>,
-  ) { }
+  ) {}
 
   create = async (createUserDto: CreateUserDto) => {
     await this.userRepository.save(createUserDto);
-  }
+  };
 
   findAll = async () => await this.userRepository.find();
 
@@ -39,7 +39,7 @@ export class UsersService {
   };
 
   remove = async (id: number) => {
-    await this.userRepository.delete(id)
+    await this.userRepository.delete(id);
   };
 
   addAddressById = async (id: number, createAddressDto: CreateAddressDto) => {
@@ -49,13 +49,12 @@ export class UsersService {
     });
     if (!user?.id) throw new NotFoundException('not found user');
     const newAddress = await this.addressRepository.save(createAddressDto);
-    user.address.push(newAddress)
-    await this.userRepository.save(user)
+    user.address.push(newAddress);
+    await this.userRepository.save(user);
   };
 
   removeAddress = async (id: number) => {
-    await this.addressRepository.delete(id)
-    return
+    await this.addressRepository.delete(id);
+    return;
   };
-
 }

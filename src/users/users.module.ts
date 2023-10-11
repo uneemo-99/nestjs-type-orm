@@ -16,10 +16,11 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         options: {
           host: 'localhost',
           port: 6379,
-        }
+        },
       },
-    ])],
+    ]),
+  ],
   controllers: [UsersController],
   providers: [UsersService],
 })
-export class UsersModule { }
+export class UsersModule {}
