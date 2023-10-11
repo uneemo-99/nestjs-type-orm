@@ -1,0 +1,164 @@
+{
+	"info": {
+		"_postman_id": "feb54772-9d27-4b5a-9d2c-161e6ee1e4b4",
+		"name": "nest-type-orm",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13714130",
+		"_collection_link": "https://az5-dev.postman.co/workspace/uneemo-99~068d323b-0e07-4b03-9704-ad84f6693207/collection/13714130-feb54772-9d27-4b5a-9d2c-161e6ee1e4b4?action=share&source=collection_link&creator=13714130"
+	},
+	"item": [
+		{
+			"name": "get-users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{local-3000}}/users",
+					"host": [
+						"{{local-3000}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-user-by-id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{local-3000}}/users/2",
+					"host": [
+						"{{local-3000}}"
+					],
+					"path": [
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add-user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"f_name\":\"user_2\",\n    \"l_name\":\"test\",\n    \"email\":\"user_2@test.com\",\n    \"tel_number\":\"0987654321\",\n    \"address\":[\n        {\n            \"detail\":\"111/2\",\n            \"province\":\"Bangkok\",\n            \"zip_code\":12345\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local-3000}}/users",
+					"host": [
+						"{{local-3000}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-user-by-id",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"f_name\":\"user_2\",\n    \"l_name\":\"test\",\n    \"email\":\"user_2@test.co\",\n    \"tel_number\":\"0987654321\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local-3000}}/users/2",
+					"host": [
+						"{{local-3000}}"
+					],
+					"path": [
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-user-by-id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{local-3000}}/users/4",
+					"host": [
+						"{{local-3000}}"
+					],
+					"path": [
+						"users",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add-user-address-by-id",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"detail\": \"111/4\",\n    \"province\": \"Bangkok\",\n    \"zip_code\": 12345\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local-3000}}/users/2/address",
+					"host": [
+						"{{local-3000}}"
+					],
+					"path": [
+						"users",
+						"2",
+						"address"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-address-by-id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{local-3000}}/users/address/8",
+					"host": [
+						"{{local-3000}}"
+					],
+					"path": [
+						"users",
+						"address",
+						"8"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
