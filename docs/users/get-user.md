@@ -1,3 +1,5 @@
+# get user by id
+
 ```mermaid
 sequenceDiagram
     Client->>UserService :  GET: /users/:id

@@ -1,3 +1,5 @@
+# delete address by id
+
 ```mermaid
 sequenceDiagram
     Client->>UserService :  DELETE: /users/address/:id

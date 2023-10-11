@@ -1,3 +1,5 @@
+# update user by id
+
 ```mermaid
 sequenceDiagram
     Client->>UserService :  PATCH: /users/:id

@@ -1,3 +1,5 @@
+# add new user
+
 ```mermaid
 sequenceDiagram
     Client->>UserService :  POST: /users

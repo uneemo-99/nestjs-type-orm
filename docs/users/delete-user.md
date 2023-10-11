@@ -1,3 +1,5 @@
+# delete user by id
+
 ```mermaid
 sequenceDiagram
     Client->>UserService :  DELETE: /users/:id

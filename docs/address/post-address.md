@@ -1,3 +1,5 @@
+# add new address by user id
+
 ```mermaid
 sequenceDiagram
     Client->>UserService :  POST: /users/:id/address
