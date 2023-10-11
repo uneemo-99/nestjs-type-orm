@@ -23,5 +23,5 @@ export class Address {
 
   @ManyToOne((type) => User, (user) => user.address, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  user_id: User;
 }

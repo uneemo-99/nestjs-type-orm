@@ -18,6 +18,6 @@ export class User {
   @Column()
   tel_number: string;
 
-  @OneToMany((type) => Address, (address) => address.user, { cascade: true })
+  @OneToMany((type) => Address, (address) => address.user_id, { cascade: true })
   address: Address[];
 }
