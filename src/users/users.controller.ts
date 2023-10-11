@@ -8,29 +8,36 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  Inject,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateAddressDto } from './dto/create-address.dto';
+import { ClientProxy, EventPattern } from '@nestjs/microservices';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(
+    private readonly usersService: UsersService,
+    @Inject("USER_SERVICE")
+    private userMicroSvc: ClientProxy
+  ) { }
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto) {
+    return await this.usersService.create(createUserDto);
   }
 
   @Get()
-  async findAll() {
-    return this.usersService.findAll();
+  findAll() {
+    return this.userMicroSvc.send('get-users', {});
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+    // return this.usersService.findOne(+id);
+    return this.userMicroSvc.send('get-user', id);
   }
 
   @HttpCode(HttpStatus.ACCEPTED)
@@ -58,4 +65,17 @@ export class UsersController {
   ) {
     return this.usersService.addAddressById(+id, createAddressDto);
   }
+
+  @EventPattern('get-users')
+  async sendUsers() {
+    console.log('calling microSVC : get-users')
+    return await this.usersService.findAll()
+  }
+
+  @EventPattern('get-user')
+  async sendUser(data: number) {
+    console.log('calling microSVC : get-user')
+    return this.usersService.findOne(+data)
+  }
+
 }
