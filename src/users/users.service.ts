@@ -14,10 +14,11 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(Address)
     private readonly addressRepository: Repository<Address>,
-  ) {}
+  ) { }
 
-  create = async (createUserDto: CreateUserDto) =>
+  create = async (createUserDto: CreateUserDto) => {
     await this.userRepository.save(createUserDto);
+  }
 
   findAll = async () => await this.userRepository.find();
 
@@ -35,26 +36,26 @@ export class UsersService {
       where: { id },
     });
     await this.userRepository.save({ id: user.id, ...updateUserDto });
-    return `This action updates a #${id} user`;
   };
 
-  remove = async (id: number) => await this.userRepository.delete(id);
+  remove = async (id: number) => {
+    await this.userRepository.delete(id)
+  };
 
   addAddressById = async (id: number, createAddressDto: CreateAddressDto) => {
-    const address = await this.userRepository.findOne({
+    const user = await this.userRepository.findOne({
       where: { id },
       relations: { address: true },
     });
-    if (!address?.id) throw new NotFoundException('not found user');
-
-    // address.address.map(async (addr) => {
-    //   delete addr.id;
-    //   console.log({ ...addr, user_id: id });
-    //   await this.addressRepository.save({ ...addr });
-    // });
-    console.log(createAddressDto);
-    await this.addressRepository.save(createAddressDto);
-
-    return address.address;
+    if (!user?.id) throw new NotFoundException('not found user');
+    const newAddress = await this.addressRepository.save(createAddressDto);
+    user.address.push(newAddress)
+    await this.userRepository.save(user)
   };
+
+  removeAddress = async (id: number) => {
+    await this.addressRepository.delete(id)
+    return
+  };
+
 }
