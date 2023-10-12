@@ -14,24 +14,26 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(Address)
     private readonly addressRepository: Repository<Address>,
-  ) { }
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     return await this.userRepository.save(createUserDto);
-  };
+  }
 
   async findAll() {
-    return await this.userRepository.find();
+    const data = await this.userRepository.createQueryBuilder('user').getMany();
+    return data;
   }
 
   async findOne(id: number) {
-    const user = await this.userRepository.findOne({
-      where: { id },
-      relations: { address: true },
-    });
+    const user = await this.userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.address', 'address')
+      .where('user.id = :id', { id })
+      .getOne();
     if (!user) throw new NotFoundException('not found user');
     return user;
-  };
+  }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     const user = await this.userRepository.findOne({
@@ -39,19 +41,19 @@ export class UsersService {
     });
     if (!user?.id) throw new NotFoundException('not found user');
     return await this.userRepository.save({ id: user.id, ...updateUserDto });
-  };
+  }
 
   async remove(id: number) {
-    const result = await this.userRepository.softDelete(id)
-    if (!result.affected) throw new NotFoundException('not found that user')
-    return { msg: "success" };
-  };
+    const result = await this.userRepository.softDelete(id);
+    if (!result.affected) throw new NotFoundException('not found that user');
+    return { msg: 'success' };
+  }
 
   async restoreUser(id: number) {
-    const result = await this.userRepository.restore(id)
-    if (!result.affected) throw new NotFoundException('not found that user')
-    return { msg: "success" };
-  };
+    const result = await this.userRepository.restore(id);
+    if (!result.affected) throw new NotFoundException('not found that user');
+    return { msg: 'success' };
+  }
 
   async addAddressById(id: number, createAddressDto: CreateAddressDto) {
     const user = await this.userRepository.findOne({
@@ -62,20 +64,20 @@ export class UsersService {
     const newAddress = await this.addressRepository.save(createAddressDto);
     user.address.push(newAddress);
     await this.userRepository.save(user);
-    return newAddress
-  };
+    return newAddress;
+  }
 
   async removeAddress(id: number) {
     const result = await this.addressRepository.softDelete(id);
-    console.log(result)
-    if (!result.affected) throw new NotFoundException('not found that address')
-    return { msg: "success" }
-  };
+    console.log(result);
+    if (!result.affected) throw new NotFoundException('not found that address');
+    return { msg: 'success' };
+  }
 
   async restoreAddress(id: number) {
     const result = await this.addressRepository.restore(id);
-    console.log(result)
-    if (!result.affected) throw new NotFoundException('not found that address')
-    return { msg: "success" }
+    console.log(result);
+    if (!result.affected) throw new NotFoundException('not found that address');
+    return { msg: 'success' };
   }
 }

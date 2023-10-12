@@ -22,7 +22,7 @@ export class UsersController {
     private readonly usersService: UsersService,
     @Inject('USER_SERVICE')
     private userMicroSvc: ClientProxy,
-  ) { }
+  ) {}
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
