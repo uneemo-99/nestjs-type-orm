@@ -43,7 +43,7 @@ export class UsersService {
 
   async remove(id: number) {
     const result = await this.userRepository.delete(id)
-    if (!result.affected) throw new NotFoundException(`not found that user`)
+    if (!result.affected) throw new NotFoundException('not found that user')
     return { msg: "success" };
   };
 
@@ -61,7 +61,7 @@ export class UsersService {
 
   async removeAddress(id: number) {
     const result = await this.addressRepository.delete(id);
-    if (!result.affected) throw new NotFoundException(`not found that address`)
+    if (!result.affected) throw new NotFoundException('not found that address')
     return { msg: "success" }
   };
 }
