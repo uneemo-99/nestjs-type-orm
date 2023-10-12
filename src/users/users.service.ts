@@ -17,7 +17,7 @@ export class UsersService {
   ) { }
 
   async create(createUserDto: CreateUserDto) {
-    await this.userRepository.save(createUserDto);
+    return await this.userRepository.save(createUserDto);
   };
 
   async findAll() {
@@ -37,11 +37,12 @@ export class UsersService {
     const user = await this.userRepository.findOne({
       where: { id },
     });
-    await this.userRepository.save({ id: user.id, ...updateUserDto });
+    if (!user?.id) throw new NotFoundException('not found user');
+    return await this.userRepository.save({ id: user.id, ...updateUserDto });
   };
 
   async remove(id: number) {
-    await this.userRepository.delete(id);
+    return await this.userRepository.delete(id);
   };
 
   async addAddressById(id: number, createAddressDto: CreateAddressDto) {
@@ -53,10 +54,10 @@ export class UsersService {
     const newAddress = await this.addressRepository.save(createAddressDto);
     user.address.push(newAddress);
     await this.userRepository.save(user);
+    return newAddress
   };
 
   async removeAddress(id: number) {
-    await this.addressRepository.delete(id);
-    return;
+    return await this.addressRepository.delete(id);
   };
 }
