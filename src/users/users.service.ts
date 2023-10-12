@@ -14,15 +14,17 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(Address)
     private readonly addressRepository: Repository<Address>,
-  ) {}
+  ) { }
 
-  create = async (createUserDto: CreateUserDto) => {
+  async create(createUserDto: CreateUserDto) {
     await this.userRepository.save(createUserDto);
   };
 
-  findAll = async () => await this.userRepository.find();
+  async findAll() {
+    return await this.userRepository.find();
+  }
 
-  findOne = async (id: number) => {
+  async findOne(id: number) {
     const user = await this.userRepository.findOne({
       where: { id },
       relations: { address: true },
@@ -31,18 +33,18 @@ export class UsersService {
     return user;
   };
 
-  update = async (id: number, updateUserDto: UpdateUserDto) => {
+  async update(id: number, updateUserDto: UpdateUserDto) {
     const user = await this.userRepository.findOne({
       where: { id },
     });
     await this.userRepository.save({ id: user.id, ...updateUserDto });
   };
 
-  remove = async (id: number) => {
+  async remove(id: number) {
     await this.userRepository.delete(id);
   };
 
-  addAddressById = async (id: number, createAddressDto: CreateAddressDto) => {
+  async addAddressById(id: number, createAddressDto: CreateAddressDto) {
     const user = await this.userRepository.findOne({
       where: { id },
       relations: { address: true },
@@ -53,7 +55,7 @@ export class UsersService {
     await this.userRepository.save(user);
   };
 
-  removeAddress = async (id: number) => {
+  async removeAddress(id: number) {
     await this.addressRepository.delete(id);
     return;
   };
