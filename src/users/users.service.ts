@@ -14,7 +14,7 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(Address)
     private readonly addressRepository: Repository<Address>,
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
     return await this.userRepository.save(createUserDto);
@@ -62,8 +62,12 @@ export class UsersService {
     });
     if (!user?.id) throw new NotFoundException('not found user');
     const newAddress = await this.addressRepository.save(createAddressDto);
-    user.address.push(newAddress);
-    await this.userRepository.save(user);
+
+    await this.addressRepository.update(newAddress.id, { user_id: () => id.toString() })
+    // user.address.push(newAddress);
+    // await this.userRepository.save(user);
+
+    delete newAddress.deletedAt
     return newAddress;
   }
 
