@@ -14,7 +14,7 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(Address)
     private readonly addressRepository: Repository<Address>,
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
     return await this.userRepository.save(createUserDto);
@@ -47,13 +47,13 @@ export class UsersService {
   async remove(id: number) {
     const result = await this.userRepository.softDelete(id);
     if (!result.affected) throw new NotFoundException('not found that user');
-    return { msg: 'success' };
+    return { message: 'success' };
   }
 
   async restoreUser(id: number) {
     const result = await this.userRepository.restore(id);
     if (!result.affected) throw new NotFoundException('not found that user');
-    return { msg: 'success' };
+    return { message: 'success' };
   }
 
   async addAddressById(id: number, createAddressDto: CreateAddressDto) {
@@ -78,13 +78,13 @@ export class UsersService {
     const result = await this.addressRepository.softDelete(id);
     console.log(result);
     if (!result.affected) throw new NotFoundException('not found that address');
-    return { msg: 'success' };
+    return { message: 'success' };
   }
 
   async restoreAddress(id: number) {
     const result = await this.addressRepository.restore(id);
     console.log(result);
     if (!result.affected) throw new NotFoundException('not found that address');
-    return { msg: 'success' };
+    return { message: 'success' };
   }
 }
