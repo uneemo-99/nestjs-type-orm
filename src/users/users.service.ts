@@ -14,7 +14,7 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(Address)
     private readonly addressRepository: Repository<Address>,
-  ) { }
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     return await this.userRepository.save(createUserDto);
@@ -30,6 +30,7 @@ export class UsersService {
       .createQueryBuilder('user')
       .leftJoinAndSelect('user.address', 'address')
       .where('user.id = :id', { id })
+      .orderBy('address.detail')
       .getOne();
     if (!user) throw new NotFoundException('not found user');
     return user;
@@ -63,11 +64,13 @@ export class UsersService {
     if (!user?.id) throw new NotFoundException('not found user');
     const newAddress = await this.addressRepository.save(createAddressDto);
 
-    await this.addressRepository.update(newAddress.id, { user_id: () => id.toString() })
+    await this.addressRepository.update(newAddress.id, {
+      user_id: () => id.toString(),
+    });
     // user.address.push(newAddress);
     // await this.userRepository.save(user);
 
-    delete newAddress.deletedAt
+    delete newAddress.deletedAt;
     return newAddress;
   }
 
