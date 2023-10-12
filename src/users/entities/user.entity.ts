@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Address } from './address.entity';
 
 @Entity()
@@ -20,4 +20,7 @@ export class User {
 
   @OneToMany(() => Address, (address) => address.user_id, { cascade: true })
   address: Address[];
+
+  @DeleteDateColumn({ select: false })
+  deletedAt: Date;
 }

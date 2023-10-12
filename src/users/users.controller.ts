@@ -51,6 +51,11 @@ export class UsersController {
   async remove(@Param('id') id: number) {
     return this.usersService.remove(id);
   }
+  @HttpCode(HttpStatus.ACCEPTED)
+  @Patch('restore/:id')
+  async restoreUser(@Param('id') id: number) {
+    return this.usersService.restoreUser(id);
+  }
 
   @Post(':id/address')
   addAddressById(
@@ -64,6 +69,12 @@ export class UsersController {
   @Delete('address/:id')
   async removeAddress(@Param('id') id: number) {
     return this.usersService.removeAddress(id);
+  }
+
+  @HttpCode(HttpStatus.ACCEPTED)
+  @Patch('address/restore/:id')
+  async restoreAddress(@Param('id') id: number) {
+    return this.usersService.restoreAddress(id);
   }
 
   @EventPattern('get-users')

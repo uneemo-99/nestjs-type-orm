@@ -1,5 +1,6 @@
 import {
   Column,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -21,7 +22,10 @@ export class Address {
   @Column()
   zip_code: number;
 
-  @ManyToOne(() => User, (user) => user.address, { onDelete: 'SET NULL' })
+  @ManyToOne(() => User, (user) => user.address)
   @JoinColumn({ name: 'user_id' })
   user_id: User;
+
+  @DeleteDateColumn({ select: false })
+  deletedAt: Date;
 }

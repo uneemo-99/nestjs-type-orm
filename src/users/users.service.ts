@@ -42,7 +42,13 @@ export class UsersService {
   };
 
   async remove(id: number) {
-    const result = await this.userRepository.delete(id)
+    const result = await this.userRepository.softDelete(id)
+    if (!result.affected) throw new NotFoundException('not found that user')
+    return { msg: "success" };
+  };
+
+  async restoreUser(id: number) {
+    const result = await this.userRepository.restore(id)
     if (!result.affected) throw new NotFoundException('not found that user')
     return { msg: "success" };
   };
@@ -60,8 +66,16 @@ export class UsersService {
   };
 
   async removeAddress(id: number) {
-    const result = await this.addressRepository.delete(id);
+    const result = await this.addressRepository.softDelete(id);
+    console.log(result)
     if (!result.affected) throw new NotFoundException('not found that address')
     return { msg: "success" }
   };
+
+  async restoreAddress(id: number) {
+    const result = await this.addressRepository.restore(id);
+    console.log(result)
+    if (!result.affected) throw new NotFoundException('not found that address')
+    return { msg: "success" }
+  }
 }
