@@ -22,7 +22,7 @@ export class UsersController {
     private readonly usersService: UsersService,
     @Inject('USER_SERVICE')
     private userMicroSvc: ClientProxy,
-  ) {}
+  ) { }
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
@@ -35,35 +35,35 @@ export class UsersController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    // return this.usersService.findOne(+id);
-    return this.userMicroSvc.send('get-user', id);
+  async findOne(@Param('id') id: number) {
+    return this.usersService.findOne(id);
+    // return this.userMicroSvc.send('get-user', id);
   }
 
   @HttpCode(HttpStatus.ACCEPTED)
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(id, updateUserDto);
   }
 
   @HttpCode(HttpStatus.ACCEPTED)
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
-  }
-
-  @HttpCode(HttpStatus.ACCEPTED)
-  @Delete('address/:id')
-  async removeAddress(@Param('id') id: string) {
-    return this.usersService.removeAddress(+id);
+  async remove(@Param('id') id: number) {
+    return this.usersService.remove(id);
   }
 
   @Post(':id/address')
   addAddressById(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() createAddressDto: CreateAddressDto,
   ) {
-    return this.usersService.addAddressById(+id, createAddressDto);
+    return this.usersService.addAddressById(id, createAddressDto);
+  }
+
+  @HttpCode(HttpStatus.ACCEPTED)
+  @Delete('address/:id')
+  async removeAddress(@Param('id') id: number) {
+    return this.usersService.removeAddress(id);
   }
 
   @EventPattern('get-users')
@@ -75,6 +75,6 @@ export class UsersController {
   @EventPattern('get-user')
   async sendUser(data: number) {
     console.log('calling microSVC : get-user');
-    return this.usersService.findOne(+data);
+    return this.usersService.findOne(data);
   }
 }

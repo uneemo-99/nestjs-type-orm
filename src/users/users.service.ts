@@ -42,7 +42,9 @@ export class UsersService {
   };
 
   async remove(id: number) {
-    return await this.userRepository.delete(id);
+    const result = await this.userRepository.delete(id)
+    if (!result.affected) throw new NotFoundException(`not found that user`)
+    return { msg: "success" };
   };
 
   async addAddressById(id: number, createAddressDto: CreateAddressDto) {
@@ -58,6 +60,8 @@ export class UsersService {
   };
 
   async removeAddress(id: number) {
-    return await this.addressRepository.delete(id);
+    const result = await this.addressRepository.delete(id);
+    if (!result.affected) throw new NotFoundException(`not found that address`)
+    return { msg: "success" }
   };
 }
