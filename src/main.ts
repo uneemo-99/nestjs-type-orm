@@ -19,6 +19,8 @@ async function bootstrap() {
     .setTitle('Nestjs Typeorm')
     .setDescription('Simple CRUD API')
     .setVersion('1.0')
+    .addTag('users',)
+    .addTag('address',)
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
