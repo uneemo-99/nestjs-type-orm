@@ -1,12 +1,12 @@
-# get all users
+# restore user by id
 
 ```mermaid
 sequenceDiagram
-    Client->>UserService :  GET: /users
+    Client->>UserService :  PATCH: /users/restore/:id
     activate UserService
-    UserService->>DB: find all users
+    UserService->>DB: restore user
     activate DB
-    DB->>DB: find all users
+    DB->>DB: restore user by id
     DB-->>UserService: response message
     deactivate DB
     UserService-->>Client: response message

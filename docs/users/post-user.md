@@ -7,8 +7,8 @@ sequenceDiagram
     UserService->>DB: add user
     activate DB
     DB->>DB: insert new user
-    DB-->>UserService: response status
+    DB-->>UserService: response message
     deactivate DB
-    UserService-->>Client: response status
+    UserService-->>Client: response message
     deactivate UserService
 ```

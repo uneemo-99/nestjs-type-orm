@@ -7,8 +7,8 @@ sequenceDiagram
     UserService->>DB: find user
     activate DB
     DB->>DB: find a user by id
-    DB-->>UserService: response user
+    DB-->>UserService: response message
     deactivate DB
-    UserService-->>Client: response user
+    UserService-->>Client: response message
     deactivate UserService
 ```

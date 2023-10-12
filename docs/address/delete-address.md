@@ -7,8 +7,8 @@ sequenceDiagram
     UserService->>DB: delete address
     activate DB
     DB->>DB: delete address by id
-    DB-->>UserService: response status
+    DB-->>UserService: response message
     deactivate DB
-    UserService-->>Client: response status
+    UserService-->>Client: response message
     deactivate UserService
 ```
